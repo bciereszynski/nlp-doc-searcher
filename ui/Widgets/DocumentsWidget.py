@@ -19,7 +19,7 @@ class DocumentsWidget(QWidget):
 
         self.addButton.clicked.connect(self.add_document)
         self.saveButton.clicked.connect(self.documentsProvider.save_data)
-        self.searchBar.connectButtonClickedSlot(
+        self.searchBar.connectSearchSlot(
             lambda: self.fetch_documents(self.searchBar.getQuery()))
 
         self.fetch_documents("")

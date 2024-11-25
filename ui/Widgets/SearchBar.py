@@ -19,5 +19,6 @@ class SearchBar(QWidget):
     def getQuery(self):
         return self.lineEdit.text()
 
-    def connectButtonClickedSlot(self, lambda_expr):
-        return self.button.clicked.connect(lambda_expr)
+    def connectSearchSlot(self, lambda_expr):
+        self.lineEdit.returnPressed.connect(lambda_expr)
+        self.button.clicked.connect(lambda_expr)

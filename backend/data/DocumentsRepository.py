@@ -1,5 +1,4 @@
-from backend.nlp.TextPreprocessor import TextPreprocessor
-
+import pickle
 
 class DocumentsRepository:
     def __init__(self, preprocesor):
@@ -8,10 +7,16 @@ class DocumentsRepository:
         self.cleared_documents = []
 
     def load(self):
-        pass
+        try:
+            with open("documents.dat", "rb") as file:
+                self.documents = pickle.load(file)
+                self.cleared_documents = [self.preporcessor.preprocess(document) for document in self.documents]
+        except FileNotFoundError:
+            pass
 
     def save(self):
-        pass
+        with open("documents.dat", "w+b") as outfile:
+            pickle.dump(self.documents, outfile)
 
     def add(self, document):
         self.documents.append(document)

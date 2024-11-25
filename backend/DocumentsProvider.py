@@ -7,6 +7,7 @@ class DocumentsProvider:
     def __init__(self):
         self.preprocesor = TextPreprocessor()
         self.repository = DocumentsRepository(self.preprocesor)
+        self.repository.load()
         self.Tfidf = TfIdfModel(self.repository.get_clearded_documents())
 
     def add_document(self, document):
@@ -24,3 +25,6 @@ class DocumentsProvider:
         sorted_values, sorted_documents = zip(*sorted_similarities)
 
         return sorted_documents
+
+    def save_data(self):
+        self.repository.save()

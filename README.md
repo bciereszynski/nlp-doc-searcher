@@ -1,4 +1,5 @@
 [PL]
+```
 Wyszukiwarka dokumentów z wykorzystaniem reprezentacji wektorowej.
 Aplikacja powinna umożliwiać:
 ● Dodanie dokumentu tekstowego
@@ -21,3 +22,4 @@ z najmniejsza odległością) do tych najmniej podobnych
 D. Analiza wyników:
 ● W sprawozdaniu pokazanie kilku wyników z dwoma metodami
 wektoryzacji i ich subiektywna ocena.
+```

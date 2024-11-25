@@ -1,13 +1,14 @@
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import QApplication
 import sys
+
+from ui.MainWindow import MainWindow
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
-    window = QWidget()
+    window = MainWindow()
     window.show()
 
-    # Start the event loop.
     app.exec()
 
 

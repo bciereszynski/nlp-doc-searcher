@@ -23,3 +23,7 @@ D. Analiza wyników:
 ● W sprawozdaniu pokazanie kilku wyników z dwoma metodami
 wektoryzacji i ich subiektywna ocena.
 ```
+
+To download spacy language model:
+
+python -m spacy download en_core_web_sm

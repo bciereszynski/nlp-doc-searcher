@@ -5,13 +5,18 @@ class TfIdfModel:
     # documents must be preprocessed
     def __init__(self, documents):
         self.vectorizer = TfidfVectorizer()
-        self.documents_tfidf = self.vectorizer.fit_transform(documents)
+        self.documents_tfidf = None
+        if documents:
+            self.documents_tfidf = self.vectorizer.fit_transform(documents)
 
     def reinit(self, documents):
-        self.documents_tfidf = self.vectorizer.fit_transform(documents)
+        if documents:
+            self.documents_tfidf = self.vectorizer.fit_transform(documents)
 
     # query must be preprocessed
     def get_cosine_similarity(self, query):
+        if self.documents_tfidf is None:
+            return []
         query_tfidf = self.vectorizer.transform([query])
 
         similarities = cosine_similarity(query_tfidf, self.documents_tfidf).flatten()

@@ -15,3 +15,9 @@ class SearchBar(QWidget):
         grid.addWidget(self.button, 1, 0, QtCore.Qt.AlignRight)
 
         self.setLayout(grid)
+
+    def getQuery(self):
+        return self.lineEdit.text()
+
+    def connectButtonClickedSlot(self, lambda_expr):
+        return self.button.clicked.connect(lambda_expr)

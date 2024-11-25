@@ -9,6 +9,8 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Search App')
+        self.setMaximumWidth(500)
+        self.setMaximumHeight(700)
 
         self.documentWidget = DocumentsWidget()
         lay = QVBoxLayout()

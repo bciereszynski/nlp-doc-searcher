@@ -1,8 +1,8 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton
-from ui.SearchBar import SearchBar
+from ui.Widgets.SearchBar import SearchBar
 
-class DocumentWidget(QWidget):
+class DocumentsWidget(QWidget):
     def __init__(self):
         super().__init__()
 

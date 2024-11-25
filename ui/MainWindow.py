@@ -1,7 +1,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMessageBox, QWidget, QMainWindow, QVBoxLayout
 
-from ui.DocumentWidget import DocumentWidget
+from ui.Widgets.DocumentsWidget import DocumentsWidget
 
 
 class MainWindow(QMainWindow):
@@ -10,7 +10,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle('Search App')
 
-        self.documentWidget = DocumentWidget()
+        self.documentWidget = DocumentsWidget()
         lay = QVBoxLayout()
         lay.addWidget(self.documentWidget, alignment=Qt.AlignHCenter | Qt.AlignTop )
 

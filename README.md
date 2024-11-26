@@ -2,14 +2,14 @@
 ```
 Wyszukiwarka dokumentów z wykorzystaniem reprezentacji wektorowej.
 Aplikacja powinna umożliwiać:
-● Dodanie dokumentu tekstowego
-● Wyszukiwanie za pomocą zapytania
+● Dodanie dokumentu tekstowego ✅
+● Wyszukiwanie za pomocą zapytania ✅
 
-A. Dokumenty i zapytania powinny być wstępnie przetworzone:
+A. Dokumenty i zapytania powinny być wstępnie przetworzone: ➕
 ● Tokenizacja - podział tekstu na słowa/tokeny. ✅
 ● Normalizacja - usunięcie znaków specjalnych, zamiana na małe litery, ✅
 usunięcie stop-słów itp. ✅
-● Stemming lub lematyzacja - redukcja słów do ich podstawowych form.
+● Stemming lub lematyzacja - redukcja słów do ich podstawowych form. ✅
 B. Następnie zwektoryzowane dwoma metodami:
 ● Tf-idf, wstępna baza dokumentów służy za słownik, dodatkowo wraz ze
 wzrostem bazy słownik może być przebudowany ✅

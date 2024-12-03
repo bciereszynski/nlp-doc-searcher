@@ -1,6 +1,7 @@
 from backend.data.DocumentsRepository import DocumentsRepository
 from backend.nlp.TextPreprocessor import TextPreprocessor
 from backend.nlp.TfIdfModel import TfIdfModel
+from backend.nlp.Word2VecModel import Word2VecModel
 
 
 class DocumentsProvider:
@@ -9,10 +10,12 @@ class DocumentsProvider:
         self.repository = DocumentsRepository(self.preprocesor)
         self.repository.load()
         self.Tfidf = TfIdfModel(self.repository.get_clearded_documents())
+        self.Word2Vec = Word2VecModel(self.repository.get_clearded_documents())
 
     def add_document(self, document):
         self.repository.add(document)
         self.Tfidf.reinit(self.repository.get_clearded_documents())
+        self.Word2Vec.reinit(self.repository.get_clearded_documents())
 
     def get_ordered_documents(self, query):
         documents = self.repository.get_documents()
@@ -20,6 +23,7 @@ class DocumentsProvider:
             return documents
 
         similarities = self.Tfidf.get_cosine_similarity(self.preprocesor.preprocess(query))
+        similarities = self.Word2Vec.get_cosine_similarity(self.preprocesor.preprocess(query))
 
         sorted_similarities = sorted(zip(similarities, documents), reverse=True)
         sorted_values, sorted_documents = zip(*sorted_similarities)

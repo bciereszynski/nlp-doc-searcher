@@ -2,7 +2,7 @@ import pickle
 
 class DocumentsRepository:
     def __init__(self, preprocesor):
-        self.preporcessor = preprocesor
+        self.preprocessor = preprocesor
         self.documents = []
         self.cleared_documents = []
 
@@ -30,5 +30,5 @@ class DocumentsRepository:
     def get_documents(self):
         return self.documents
 
-    def get_clearded_documents(self):
+    def get_cleared_documents(self):
         return self.cleared_documents

@@ -15,11 +15,11 @@ class DocumentsProvider:
             model_class_name = model.value
             module_path = f"backend.nlp.{model_class_name}"
             model_class = getattr(import_module(module_path), model_class_name)
-            self.models[model] = model_class(self.repository.get_clearded_documents())
+            self.models[model] = model_class(self.repository.get_cleared_documents())
 
     def add_document(self, document):
         self.repository.add(document)
-        cleared_documents = self.repository.get_clearded_documents()
+        cleared_documents = self.repository.get_cleared_documents()
 
         for model in self.models.values():
             model.reinit(cleared_documents)

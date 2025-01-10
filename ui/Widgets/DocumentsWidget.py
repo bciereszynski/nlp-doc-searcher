@@ -1,7 +1,7 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QListWidget, QSizePolicy, QFileDialog, QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QListWidget, QFileDialog, QHBoxLayout, QLabel
 
 from backend.DocumentsProvider import DocumentsProvider
+from backend.SimilarityModel import SimilarityModel
 from ui.Widgets.SearchBar import SearchBar
 
 class DocumentsWidget(QWidget):
@@ -13,9 +13,20 @@ class DocumentsWidget(QWidget):
         self.searchBar = SearchBar()
         self.addButton = QPushButton('Add Document')
         self.saveButton = QPushButton('Save Documents')
-        self.documentsList = QListWidget()
+        self.documentsLists = {model: QListWidget(self) for model in SimilarityModel}
 
-        self.documentsList.setMinimumSize(200, 600)
+        listsLayout = QHBoxLayout()
+
+        for model, list_widget in self.documentsLists.items():
+            columnLayout = QVBoxLayout()
+
+            label = QLabel(model.name)
+            columnLayout.addWidget(label)
+
+            list_widget.setMinimumSize(200, 600)
+            columnLayout.addWidget(list_widget)
+
+            listsLayout.addLayout(columnLayout)
 
         self.addButton.clicked.connect(self.add_document)
         self.saveButton.clicked.connect(self.documentsProvider.save_data)
@@ -32,14 +43,15 @@ class DocumentsWidget(QWidget):
 
         lay.addLayout(vLay, stretch=1)
         lay.addWidget(self.searchBar, stretch=1)
-        lay.addWidget(self.documentsList, stretch=10)
+        lay.addLayout(listsLayout, stretch=10)
 
         self.setLayout(lay)
 
     def fetch_documents(self, query):
-        documents = self.documentsProvider.get_ordered_documents(query)
-        self.documentsList.clear()
-        self.documentsList.addItems(documents)
+        for model in SimilarityModel:
+            documents = self.documentsProvider.get_ordered_documents(query, model=model)
+            self.documentsLists[model].clear()
+            self.documentsLists[model].addItems(documents)
 
     def add_document(self):
         fileName = QFileDialog.getOpenFileName(self)
@@ -53,4 +65,4 @@ class DocumentsWidget(QWidget):
         if document is not None:
             self.documentsProvider.add_document(document)
 
-        self.fetch_documents("")
+        self.fetch_documents(self.searchBar.getQuery())

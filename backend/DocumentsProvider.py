@@ -33,10 +33,16 @@ class DocumentsProvider:
             raise ValueError(f"Unsupported model: {model}")
 
         similarities = self.models[model].get_cosine_similarity(self.preprocesor.preprocess(query))
-        sorted_similarities = sorted(zip(similarities, documents), reverse=True)
+        sorted_similarities = sorted(zip(similarities, documents), key=lambda x: x[0], reverse=True)
         _, sorted_documents = zip(*sorted_similarities)
 
         return sorted_documents
 
     def save_data(self):
         self.repository.save()
+
+    def get_document_content(self, filename):
+        for document in self.repository.get_documents():
+            if document['filename'] == filename:
+                return document['content']
+        raise ValueError(f"Document with filename '{filename}' not found.")

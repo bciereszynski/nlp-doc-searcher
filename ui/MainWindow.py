@@ -1,4 +1,4 @@
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtWidgets import QMessageBox, QWidget, QMainWindow, QVBoxLayout
 
 from ui.Widgets.DocumentsWidget import DocumentsWidget
@@ -20,6 +20,9 @@ class MainWindow(QMainWindow):
         widget.setLayout(lay)
         self.setCentralWidget(widget)
 
+    def showEvent(self, event):
+        self.documentWidget.load_data_and_show_loading()
+        super().showEvent(event)
 
     @staticmethod
     def __showErrorMsg(msg):

@@ -6,26 +6,24 @@ import gensim.downloader as api
 import numpy as np
 from scipy import spatial
 
-from backend.nlp.models.SimilarityModel import SimilarityModel
-
 nltk.download('punkt_tab')
 
 
-class Word2VecModel(SimilarityModel):
+class Word2VecModel:
     __MODEL_NAME = "glove-wiki-gigaword-100"
 
-    def __init__(self, documents):
+    def __init__(self):
         self.logger = logging.getLogger(__name__)
 
         self.model = None
         self.vecs = {}
 
-    async def init_async(self, documents: list[str]) -> None:
+    def init(self, documents: list[str]) -> None:
         self.model = api.load(self.__MODEL_NAME)
-        await self.reinit_async(documents)
+        self.reinit(documents)
         self.logger.info("Word2VecModel initialized")
 
-    async def reinit_async(self, documents: list[str]) -> None:
+    def reinit(self, documents: list[str]) -> None:
         if documents:
             with ThreadPoolExecutor() as executor:
                 results = executor.map(lambda doc: (doc, self.__calc_vector(doc)), documents)

@@ -2,21 +2,20 @@ import logging
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from backend.nlp.models.SimilarityModel import SimilarityModel
 
 
-class TfIdfModel(SimilarityModel):
+class TfIdfModel:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
 
         self.vectorizer = TfidfVectorizer()
         self.documents_tfidf = None
 
-    async def init_async(self, documents: list[str]) -> None:
-        await self.reinit_async(documents)
+    def init(self, documents: list[str]) -> None:
+        self.reinit(documents)
         self.logger.info("TfIdfModel initialized")
 
-    async def reinit_async(self, documents: list[str]) -> None:
+    def reinit(self, documents: list[str]) -> None:
         if documents:
             self.documents_tfidf = self.vectorizer.fit_transform(documents)
 

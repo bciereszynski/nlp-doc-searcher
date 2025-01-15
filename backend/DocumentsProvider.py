@@ -49,17 +49,18 @@ class DocumentsProvider:
 
     def get_ordered_documents(self, query, model):
         documents = self.repository.get_documents()
+        similarities = [0] * len(documents)
         if query == "" or not documents:
-            return documents
+            return documents, similarities
 
         if model not in self.models:
             raise ValueError(f"Unsupported model: {model}")
 
         similarities = self.models[model].get_cosine_similarity(self.preprocessor.preprocess(query))
         sorted_similarities = sorted(zip(similarities, documents), key=lambda x: x[0], reverse=True)
-        _, sorted_documents = zip(*sorted_similarities)
+        similarities, sorted_documents = zip(*sorted_similarities)
 
-        return sorted_documents
+        return sorted_documents, similarities
 
     def save_data(self):
         self.repository.save()

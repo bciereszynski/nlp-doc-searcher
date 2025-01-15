@@ -64,7 +64,7 @@ class DocumentsWidget(QWidget):
         QTimer.singleShot(10, self.__load_data_and_models)
 
     def show_document_preview(self, item):
-        file_name = item.text()
+        file_name = item.text().split()[0]
 
         document_content = self.documentsProvider.get_document_content(file_name)
 
@@ -78,8 +78,8 @@ class DocumentsWidget(QWidget):
 
     def fetch_documents(self, query):
         for model in SimilarityModel:
-            documents = self.documentsProvider.get_ordered_documents(query, model=model)
-            filenames = [doc['filename'] for doc in documents]
+            documents, similarities = self.documentsProvider.get_ordered_documents(query, model=model)
+            filenames = [f"{documents[i]['filename']}\t{similarities[i]:.2%}" for i in range(len(documents))]
 
             self.documentsLists[model].clear()
             self.documentsLists[model].addItems(filenames)

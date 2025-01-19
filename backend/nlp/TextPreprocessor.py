@@ -15,7 +15,13 @@ class TextPreprocessor:
         self.nlp = spacy.load(model)
         self.logger.info("TextPreprocessor initialized")
 
-    def preprocess(self, text : dict) -> str:
+    def tokenize(self, text: str) -> list:
+        if not self.nlp:
+            raise ValueError("TextPreprocessor not initialized")
+        doc = self.nlp(text.lower())
+        return [token.orth_ for token in doc]
+
+    def preprocess(self, text : str) -> str:
         if not self.nlp:
             raise ValueError("TextPreprocessor not initialized")
         doc = self.nlp(text.lower())

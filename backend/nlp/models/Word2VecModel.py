@@ -1,12 +1,10 @@
 import logging
 from concurrent.futures import ThreadPoolExecutor
+from backend.nlp.TextPreprocessor import TextPreprocessor
 
-import nltk
 import gensim.downloader as api
 import numpy as np
 from scipy import spatial
-
-nltk.download('punkt_tab')
 
 
 class Word2VecModel:
@@ -14,12 +12,13 @@ class Word2VecModel:
 
     def __init__(self):
         self.logger = logging.getLogger(__name__)
-
+        self.preprocessor = TextPreprocessor()
         self.model = None
         self.vecs = {}
 
     def init(self, documents: list[str]) -> None:
         self.model = api.load(self.__MODEL_NAME)
+        self.preprocessor.init()
         self.reinit(documents)
         self.logger.info("Word2VecModel initialized")
 
@@ -40,7 +39,7 @@ class Word2VecModel:
         return similarities
 
     def __calc_vector(self, text: str):
-        all_words = [word for word in nltk.word_tokenize(text)]
+        all_words = self.preprocessor.tokenize(text)
         vec_sum = np.zeros(self.model.vector_size)
         initialized = False
 

@@ -35,7 +35,7 @@ class Word2VecModel:
 
         similarities = []
         for document, vec in self.vecs.items():
-            similarities.append(spatial.distance.cosine(vec_query, vec))
+            similarities.append(1-spatial.distance.cosine(vec_query, vec))
         return similarities
 
     def __calc_vector(self, text: str):

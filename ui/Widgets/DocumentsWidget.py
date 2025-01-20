@@ -64,7 +64,7 @@ class DocumentsWidget(QWidget):
         QTimer.singleShot(10, self.__load_data_and_models)
 
     def show_document_preview(self, item):
-        file_name = item.text().split()[0]
+        file_name = item.text().split('\t')[0]
 
         document_content = self.documentsProvider.get_document_content(file_name)
 
